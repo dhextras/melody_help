@@ -42,47 +42,7 @@ Music Streaming Web App
      ```
 
 4. Create the necessary database tables by running the following SQL queries in the Supabase SQL Editor:
-
-   ```sql
-   -- Create the users table
-   CREATE TABLE users (
-     id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
-   );
-
-   -- Create the therapists table
-   CREATE TABLE therapists (
-     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-     code TEXT UNIQUE NOT NULL,
-     name TEXT,
-     total_conversations INTEGER DEFAULT 0,
-     last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-
-   -- Create the active_conversations table
-   CREATE TABLE active_conversations (
-     id UUID NOT NULL REFERENCES users(id),
-     therapist_id UUID NOT NULL REFERENCES therapists(id),
-     user_name TEXT,
-     therapist_name TEXT,
-     user_message TEXT,
-     started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-
-   -- Create the pending_users table
-   CREATE TABLE pending_users (
-     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-     user_id UUID NOT NULL REFERENCES users(id),
-     name TEXT,
-     initial_message TEXT
-   );
-
-   -- Create the online_therapists table
-   CREATE TABLE online_therapists (
-     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-     therapist_id UUID NOT NULL REFERENCES therapists(id),
-     online_since TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
-   ```
+    > Need to be done...
 
 5. Start the development server:
 
@@ -135,52 +95,7 @@ To deploy Mode Tunes to a VPS and manage it using PM2 for process management and
   
 
 ## Database structure
-
-### Users Table
-
-This table stores basic information about users seeking therapy.
-
-- `id`: A unique identifier for each User.
-
-### Therapists Table
-
-This table stores information about verified therapists. It has:
-
-- `id`: A unique identifier for each therapist.
-- `name`: Name of the therapist.
-- `code`: A unique code for each therapist to log in.
-- `total_conversations`: The total number of conversations a therapist has had.
-- `last_login`: The time when the therapist logged into the account via the code.
-
-### Active Conversations Table
-
-This table stores information about ongoing conversations between users and therapists. It has:
-
-- `id`: A unique identifier for each conversation which is actually the user_id.
-- `therapist_id`: The therapist participating in the conversation.
-- `user_name`: An optional name provided by the user or a random generated name.
-- `therapist_name`: The therapist name stored in db.
-- `user_message`: An optional initial message provided by the user or predefined message ( generated ).
-- `started_at`: The time when the conversation started.
-
-### Pending Users Table
-
-This table stores information about users waiting to be matched with a therapist. It has:
-
-- `id`: A unique identifier for each pending users.
-- `user_id`: The user waiting for a therapist.
-- `name`: An optional name provided by the user.
-- `initial_message`: An optional initial message provided by the user.
-
-### Online Therapists Table
-
-This table stores information about therapists who are currently online and available. It has:
-
-- `id`: A unique identifier for each online therapist record.
-- `therapist_id`: The online therapist.
-- `online_since`: The time when the therapist went online.
-
-> The actual messages exchanged during a conversation are not stored in the database to keep it anonymous.
+    > Need to be done...
 
 ### Supabase Details
 
