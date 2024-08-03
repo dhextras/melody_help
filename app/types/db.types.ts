@@ -1,16 +1,15 @@
-export interface Categories {
+export interface CategoryProp {
   id: string;
-  name: string;
+  title: string;
   description: string;
   coverImage: string;
+  thumbnailImage: string;
+  totalSongs: number;
 }
 
 export interface SongProp {
   id: string;
+  categoryId: string;
   title: string;
-  duration: number;
-}
-
-export interface Songs {
-  [key: string]: SongProp[];
+  path: string;
 }

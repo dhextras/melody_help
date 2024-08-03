@@ -8,25 +8,21 @@ import {
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 
-import PlayerBar from "~/components/PlayerBar";
+import MusicPlayer from "~/components/MusicPlayer";
 import { generateMeta } from "~/utils/generateMeta";
 
 import type { MetaFunction } from "@remix-run/node";
-import type { SongProp } from "~/types/db.types";
+import type { CategoryProp, SongProp } from "~/types/db.types";
 
 import "~/styles/root.css";
 import "~/styles/tailwind.css";
 import Header from "./components/Header";
 
-export const meta: MetaFunction = generateMeta("Root");
+export const meta: MetaFunction = generateMeta("Home");
 
-/**
- * Root component that renders the main structure of the application.
- * @param {React.ReactNode} children - The content to be rendered within the layout.
- * @returns {JSX.Element} The rendered layout component.
- */
 export default function App() {
-  const [currentSong, setCurrentSong] = useState<SongProp | null>(null);
+  const [activeSongs, setActiveSongs] = useState<SongProp[] | []>([]);
+  const [activeCategory, setActiveCategory] = useState<CategoryProp | null>(null);
 
   return (
     <html lang="en">
@@ -39,9 +35,12 @@ export default function App() {
       <body>
         <Header />
         <main>
-          <Outlet context={{ setCurrentSong }} />
+          <Outlet context={{ setActiveSongs, setActiveCategory }} />
         </main>
-        <PlayerBar currentSong={currentSong} />
+        <MusicPlayer
+          activeSongs={activeSongs}
+          activeCategory={activeCategory}
+        />
         <ToastContainer />
         <ScrollRestoration />
         <Scripts />
