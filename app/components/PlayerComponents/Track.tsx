@@ -16,20 +16,20 @@ export default function Track({
   if (!activeSong) return null;
 
   return (
-    <div className="flex-1 flex items-center justify-start">
+    <div className="flex flex-1 items-center justify-start">
       <div
         className={`${
           isPlaying && isActive ? "animate-[spin_3s_linear_infinite]" : ""
-        } hidden sm:block h-16 w-16 mr-4`}
+        } mr-4 hidden h-16 w-16 sm:block`}
       >
         <img
           src={activeCategory.thumbnailImage}
           alt="Image"
-          className="object-cover rounded-full w-full h-full"
+          className="h-full w-full rounded-full object-cover"
         />
       </div>
       <div className="w-[50%]">
-        <p className="truncate text-white font-bold text-lg">
+        <p className="truncate text-lg font-bold text-white">
           {activeCategory.title}
         </p>
         <p className="truncate text-gray-300">{activeSong.title}</p>

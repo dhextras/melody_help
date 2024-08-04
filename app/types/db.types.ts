@@ -11,5 +11,6 @@ export interface SongProp {
   id: string;
   categoryId: string;
   title: string;
+  author: string;
   path: string;
 }

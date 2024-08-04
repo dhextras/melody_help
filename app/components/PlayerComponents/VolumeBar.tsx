@@ -17,7 +17,7 @@ export default function VolumeBar({
   setVolume,
 }: VolumeBarProps) {
   return (
-    <div className="hidden lg:flex flex-1 items-center justify-end">
+    <div className="hidden flex-1 items-center justify-end lg:flex">
       {value <= 1 && value > 0.5 && (
         <Volume2 size={25} color="#FFF" onClick={() => setVolume(0)} />
       )}
@@ -34,7 +34,7 @@ export default function VolumeBar({
         min={min}
         max={max}
         onChange={onChange}
-        className="2xl:w-40 lg:w-32 md:w-32 h-1 ml-2"
+        className="ml-2 h-1 md:w-32 lg:w-32 2xl:w-40"
       />
     </div>
   );

@@ -1,49 +1,71 @@
-import { json, Link, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  defer,
+  useLoaderData,
+  useOutletContext,
+} from "@remix-run/react";
+import { Suspense } from "react";
+import CategoryCard from "~/components/CategoryCard";
 
 import { getCategories } from "~/db/utils";
 
 import type { CategoryProp } from "~/types/db.types";
 
-export const loader = async () => {
-  const categories = await getCategories();
-  return json({ categories });
+export const loader = () => {
+  const categories = getCategories();
+  return defer({ categories: categories });
 };
 
 export default function Index() {
   const { categories } = useLoaderData<{ categories: CategoryProp[] }>();
 
+  const { setActiveCategory, activeCategory } = useOutletContext<{
+    setActiveCategory: (category: CategoryProp | null) => void;
+    activeCategory: CategoryProp | null;
+  }>();
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Welcome to MoodTunes</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((category) => (
-          <Link
-            key={category.id}
-            to={`/categories/${category.id}`}
-            className="block relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+    <div className="container mx-auto h-full bg-[#191624] px-4 py-8">
+      <h1 className="mb-6 text-3xl font-bold text-white">
+        Welcome to MoodTunes
+      </h1>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Suspense
+          fallback={
+            // Replace this with the proper skeltons later
+            <>
+              {[...Array(3)].map((_, index) => (
+                <div
+                  key={index}
+                  className="aspect-[1.5] w-full animate-pulse rounded-lg bg-white/5 bg-opacity-80"
+                ></div>
+              ))}
+            </>
+          }
+        >
+          <Await
+            resolve={categories}
+            errorElement={
+              <div className="text-red-500">
+                Something went wrong. Please try again later.
+              </div>
+            }
           >
-            <img
-              src={category.coverImage}
-              alt={category.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 flex justify-between items-center">
-              <div>
-                <h2 className="text-xl font-semibold text-white mb-1 truncate">
-                  {category.title}
-                </h2>
-                <p className="text-sm text-gray-300 truncate">
-                  {category.description}
-                </p>
-              </div>
-              <div className="flex bg-red-100">
-                <p className="text-white font-semibold my-auto">
-                  {category.totalSongs} Songs
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+            {(categories: CategoryProp[]) => (
+              <>
+                {" "}
+                {categories.map((category) => (
+                  <CategoryCard
+                    key={category.id}
+                    category={category}
+                    setActiveCategory={setActiveCategory}
+                    active={activeCategory?.id === category.id}
+                  />
+                ))}
+              </>
+            )}
+          </Await>
+        </Suspense>
       </div>
     </div>
   );

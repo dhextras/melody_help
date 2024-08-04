@@ -80,5 +80,10 @@ module.exports = {
         node: true,
       },
     },
+
+    // Prettier
+    {
+      extends: ["plugin:prettier/recommended"],
+    },
   ],
 };

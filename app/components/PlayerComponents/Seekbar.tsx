@@ -22,11 +22,11 @@ export default function Seekbar({
     `${Math.floor(time / 60)}:${`0${Math.floor(time % 60)}`.slice(-2)}`;
 
   return (
-    <div className="hidden sm:flex flex-row items-center">
+    <div className="hidden flex-row items-center sm:flex">
       <button
         type="button"
         onClick={() => setSeekTime(appTime - 5)}
-        className="hidden lg:mr-4 lg:block text-white"
+        className="hidden text-white lg:mr-4 lg:block"
       >
         <Minus size={20} />
       </button>
@@ -38,13 +38,13 @@ export default function Seekbar({
         min={min}
         max={max}
         onInput={onInput}
-        className="md:block w-24 md:w-56 2xl:w-96 h-1 mx-4 2xl:mx-6 rounded-lg"
+        className="mx-4 h-1 w-24 rounded-lg md:block md:w-56 2xl:mx-6 2xl:w-96"
       />
       <p className="text-white">{max === 0 ? "0:00" : getTime(max)}</p>
       <button
         type="button"
         onClick={() => setSeekTime(appTime + 5)}
-        className="hidden lg:ml-4 lg:block text-white"
+        className="hidden text-white lg:ml-4 lg:block"
       >
         <Plus size={20} />
       </button>

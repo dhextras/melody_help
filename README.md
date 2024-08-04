@@ -42,7 +42,8 @@ Music Streaming Web App
      ```
 
 4. Create the necessary database tables by running the following SQL queries in the Supabase SQL Editor:
-    > Need to be done...
+
+   > Need to be done...
 
 5. Start the development server:
 
@@ -92,9 +93,9 @@ To deploy Mode Tunes to a VPS and manage it using PM2 for process management and
 5. Access your application:
 
    Once DNS propagation is complete, you can access Mode Tunes app at your configured domain over HTTPS.
-  
 
 ## Database structure
+
     > Need to be done...
 
 ### Supabase Details

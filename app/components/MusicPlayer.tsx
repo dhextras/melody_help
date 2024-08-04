@@ -46,14 +46,14 @@ function MusicPlayer({ activeCategory, activeSongs }: MusicPlayerProps) {
   if (currentSongs.length === 0 || !activeSong || !activeCategory) return null;
 
   return (
-    <div className="sm:px-12 px-8 w-full flex items-center justify-between fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-2">
+    <div className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-between bg-gray-800 p-2 px-8 text-white sm:px-12">
       <Track
         isPlaying={isPlaying}
         isActive={isActive}
         activeCategory={activeCategory}
         activeSong={activeSong}
       />
-      <div className="flex-1 flex flex-col items-center justify-center">
+      <div className="flex flex-1 flex-col items-center justify-center">
         <Controls
           isPlaying={isPlaying}
           repeat={repeat}

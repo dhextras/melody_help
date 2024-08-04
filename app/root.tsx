@@ -10,19 +10,20 @@ import { ToastContainer } from "react-toastify";
 
 import MusicPlayer from "~/components/MusicPlayer";
 import { generateMeta } from "~/utils/generateMeta";
+import Header from "./components/Header";
 
 import type { MetaFunction } from "@remix-run/node";
 import type { CategoryProp, SongProp } from "~/types/db.types";
 
 import "~/styles/root.css";
-import "~/styles/tailwind.css";
-import Header from "./components/Header";
 
 export const meta: MetaFunction = generateMeta("Home");
 
 export default function App() {
   const [activeSongs, setActiveSongs] = useState<SongProp[] | []>([]);
-  const [activeCategory, setActiveCategory] = useState<CategoryProp | null>(null);
+  const [activeCategory, setActiveCategory] = useState<CategoryProp | null>(
+    null,
+  );
 
   return (
     <html lang="en">
@@ -32,10 +33,12 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex h-screen flex-col">
         <Header />
-        <main>
-          <Outlet context={{ setActiveSongs, setActiveCategory }} />
+        <main className="h-[calc(100vh-4rem)]">
+          <Outlet
+            context={{ setActiveSongs, setActiveCategory, activeCategory }}
+          />
         </main>
         <MusicPlayer
           activeSongs={activeSongs}
