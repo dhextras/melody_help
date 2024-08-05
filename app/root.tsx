@@ -33,9 +33,9 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="flex h-screen flex-col">
+      <body className="absolute inset-0 flex flex-col">
         <Header />
-        <main className="h-[calc(100vh-4rem)]">
+        <main className="flex-grow overflow-y-auto bg-green-600">
           <Outlet
             context={{ setActiveSongs, setActiveCategory, activeCategory }}
           />

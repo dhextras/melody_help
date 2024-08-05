@@ -14,6 +14,7 @@ interface MusicPlayerProps {
   activeSongs: SongProp[];
 }
 
+// IMPORTANT TODO: 1. Clean the code since you fcking copy & pasted it, 2. Make it responsive for mobile, 3. Add Neumorphism effect
 function MusicPlayer({ activeCategory, activeSongs }: MusicPlayerProps) {
   const {
     currentSongs,
@@ -46,7 +47,7 @@ function MusicPlayer({ activeCategory, activeSongs }: MusicPlayerProps) {
   if (currentSongs.length === 0 || !activeSong || !activeCategory) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-between bg-gray-800 p-2 px-8 text-white sm:px-12">
+    <div className="flex items-center justify-between bg-gray-800 p-2 px-8 text-white sm:px-12">
       <Track
         isPlaying={isPlaying}
         isActive={isActive}

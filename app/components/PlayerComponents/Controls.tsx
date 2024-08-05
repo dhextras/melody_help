@@ -7,7 +7,8 @@ import {
   SkipForward,
 } from "lucide-react";
 import React from "react";
-import { SongProp } from "~/types/db.types";
+
+import type { SongProp } from "~/types/db.types";
 
 interface ControlsProps {
   isPlaying: boolean;

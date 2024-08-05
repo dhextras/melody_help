@@ -1,6 +1,7 @@
 import { useNavigate, useNavigation } from "@remix-run/react";
 
 import { Loader2, Pause, Play } from "lucide-react";
+
 import type { CategoryProp } from "~/types/db.types";
 
 export default function CategoryCard({
@@ -17,21 +18,21 @@ export default function CategoryCard({
   const isLoading = navigation.state !== "idle";
 
   return (
-    <div className="relative flex animate-slideup cursor-pointer flex-col rounded-lg bg-white/5 bg-opacity-80 p-6">
-      <div
-        className="group relative w-full overflow-hidden rounded-md"
-        onClick={() => {
-          if (!active) {
-            setActiveCategory(category);
-            navigate(`/categories/${category.id}`);
-          } else {
-            setActiveCategory(null);
-          }
-        }}
-      >
+    <div
+      className="group flex h-fit animate-slideup cursor-pointer flex-col rounded-lg bg-[#191624] bg-opacity-80 p-6"
+      onClick={() => {
+        if (!active) {
+          setActiveCategory(category);
+          navigate(`/categories/${category.id}`);
+        } else {
+          setActiveCategory(null);
+        }
+      }}
+    >
+      <div className="relative w-full overflow-hidden rounded-md">
         <div
           className={`absolute inset-0 items-center justify-center bg-[#191624] bg-opacity-50 group-hover:flex ${
-            active ? "flex bg-[#191624] bg-opacity-70" : "hidden"
+            active ? "flex" : "hidden"
           }`}
         >
           {!isLoading ? (
@@ -50,17 +51,17 @@ export default function CategoryCard({
           className="w-full object-cover"
         />
       </div>
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex flex-col">
-          <p className="truncate text-lg font-semibold text-white">
+      <div className="mt-4 flex w-full gap-2">
+        <div className="overflow-hidden pr-2">
+          <p className="truncate text-lg font-bold text-white">
             {category.title}
           </p>
-          <p className="mt-1 truncate text-sm text-gray-300">
+          <p className="truncate text-sm text-gray-100">
             {category.description}
           </p>
         </div>
-        <div className="bg-red-100">
-          <p className="my-auto font-semibold text-white">
+        <div className="flex items-end">
+          <p className="whitespace-nowrap font-semibold text-green-300">
             {category.totalSongs} Songs
           </p>
         </div>

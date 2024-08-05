@@ -16,11 +16,11 @@ export default function Track({
   if (!activeSong) return null;
 
   return (
-    <div className="flex flex-1 items-center justify-start">
+    <div className="flex flex-1 items-center justify-start py-2">
       <div
         className={`${
           isPlaying && isActive ? "animate-[spin_3s_linear_infinite]" : ""
-        } mr-4 hidden h-16 w-16 sm:block`}
+        } hidden h-16 w-16 sm:block`}
       >
         <img
           src={activeCategory.thumbnailImage}
@@ -28,7 +28,7 @@ export default function Track({
           className="h-full w-full rounded-full object-cover"
         />
       </div>
-      <div className="w-[50%]">
+      <div className="ml-5 w-[50%]">
         <p className="truncate text-lg font-bold text-white">
           {activeCategory.title}
         </p>

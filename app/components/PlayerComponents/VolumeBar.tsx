@@ -1,5 +1,5 @@
+import { Volume1, Volume2, VolumeX } from "lucide-react";
 import React from "react";
-import { Volume2, Volume1, VolumeX } from "lucide-react";
 
 interface VolumeBarProps {
   value: number;

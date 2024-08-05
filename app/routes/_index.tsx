@@ -5,8 +5,8 @@ import {
   useOutletContext,
 } from "@remix-run/react";
 import { Suspense } from "react";
-import CategoryCard from "~/components/CategoryCard";
 
+import CategoryCard from "~/components/CategoryCard";
 import { getCategories } from "~/db/utils";
 
 import type { CategoryProp } from "~/types/db.types";
@@ -25,19 +25,20 @@ export default function Index() {
   }>();
 
   return (
-    <div className="container mx-auto h-full bg-[#191624] px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold text-white">
+    <div className="flex h-full flex-col bg-[#191624] px-4 py-8">
+      {/* Use some gradiant to style the name of the app later */}
+      <h1 className="mb-6 text-center text-6xl font-bold text-white">
         Welcome to MoodTunes
       </h1>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid flex-grow grid-cols-1 gap-6 overflow-auto rounded-lg bg-gray-600 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <Suspense
           fallback={
             // Replace this with the proper skeltons later
             <>
-              {[...Array(3)].map((_, index) => (
+              {[...Array(8)].map((_, index) => (
                 <div
                   key={index}
-                  className="aspect-[1.5] w-full animate-pulse rounded-lg bg-white/5 bg-opacity-80"
+                  className="aspect-[1.1] w-full animate-pulse rounded-lg bg-[#191624] opacity-80"
                 ></div>
               ))}
             </>

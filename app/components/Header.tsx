@@ -1,9 +1,10 @@
 import { Link } from "@remix-run/react";
 
+// IMPORTANT TODO: Need to totally update the header content and it's styles
 export default function Header() {
   return (
     <header className="bg-gray-800 text-white">
-      <div className="container mx-auto flex items-center justify-between px-4 py-4">
+      <div className="mx-auto flex items-center justify-between px-4 py-4">
         <Link to="/" className="flex items-center space-x-2">
           <img src="/image.png" alt="MoodTunes Logo" className="h-8 w-8" />
           <span className="text-xl font-bold">MoodTunes</span>
