@@ -9,7 +9,6 @@ import { Suspense, useEffect } from "react";
 import invariant from "tiny-invariant";
 
 import { getCategories, getcategorySongs } from "~/db/utils";
-import formatTime from "~/utils/formateTime";
 
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { CategoryProp, SongProp } from "~/types/db.types";
@@ -35,75 +34,94 @@ export default function Category() {
     categorySongs: SongProp[];
   }>();
 
-  const { setActiveSongs, setActiveCategory } = useOutletContext<{
+  const { setActiveSongsList, setActiveCategory } = useOutletContext<{
     setActiveCategory: (category: CategoryProp) => void;
-    setActiveSongs: (song: SongProp[]) => void;
+    setActiveSongsList: (song: SongProp[]) => void;
   }>();
 
   useEffect(() => {
     (async () => {
       setActiveCategory(category);
       const songs = await categorySongs;
-      setActiveSongs(songs);
+      setActiveSongsList(songs);
     })();
   }, [categorySongs]);
 
   return (
-    <div className="h-full w-full">
-      <div className="relative mb-8 h-64">
+    <div className="flex h-full w-full flex-col">
+      <div className="relative h-64">
         <img
           src={category.coverImage}
           alt={category.title}
           className="h-full w-full object-cover"
         />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-8">
-          <h1 className="text-4xl font-bold text-white">{category.title}</h1>
-          <p className="truncate text-sm text-gray-300">
-            {category.description}
-          </p>
+        <div className="absolute bottom-0 left-0 right-0 flex gap-20 bg-gradient-to-t from-[#643838] to-transparent px-4 pb-4 pt-10">
+          <div className="w-full overflow-hidden">
+            <h1 className="mb-2 truncate text-5xl font-bold text-white">
+              {category.title}
+            </h1>
+            <p className="truncate text-sm text-gray-300">
+              {category.description}
+            </p>
+          </div>
+
+          <div className="flex items-end">
+            <p className="whitespace-nowrap text-2xl font-bold text-green-300">
+              {category.totalSongs} Songs
+            </p>
+          </div>
         </div>
       </div>
-      <div className="mx-auto h-72 w-full px-4">
-        <Suspense
-          fallback={
-            // Replace this with the proper skeltons later
-            <div className="h-full overflow-y-auto">
-              {[...Array(10)].map((_, index) => (
-                <div
-                  key={index}
-                  className="mb-4 aspect-[25] w-full animate-pulse rounded-lg bg-gray-300 p-4"
-                ></div>
-              ))}
-            </div>
-          }
-        >
-          <Await
-            resolve={categorySongs}
-            errorElement={
-              <div className="text-red-500">
-                Something went wrong. Please try again later.
-              </div>
+      <div className="flex flex-grow overflow-y-auto bg-gray-600 p-4">
+        <div></div>
+        <div className="w-full space-y-4 overflow-y-auto">
+          <Suspense
+            fallback={
+              // Replace this with the proper skeltons later
+              <>
+                {[...Array(20)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-full animate-pulse rounded-lg bg-gray-300 p-7"
+                  ></div>
+                ))}
+              </>
             }
           >
-            {(categorySongs: SongProp[]) => (
-              <ul className="h-full space-y-4 overflow-y-auto">
-                {categorySongs.map((song) => (
-                  <li
-                    key={song.id}
-                    className="group rounded-lg bg-gray-300 p-4 transition-colors hover:bg-gray-200"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">{song.title}</span>
-                      <div className="flex items-center space-x-4">
-                        <span>{formatTime(250)}</span>
+            <Await
+              resolve={categorySongs}
+              errorElement={
+                <div className="h-full content-center text-center text-red-500">
+                  <p className="text-3xl font-bold">
+                    Error Loading Songs for {category.title}. Please Reload...
+                  </p>
+                </div>
+              }
+            >
+              {(categorySongs: SongProp[]) => (
+                <>
+                  {" "}
+                  {categorySongs.map((song, index) => (
+                    <div
+                      key={song.id}
+                      className="group rounded-lg bg-gray-300 p-4 transition-colors hover:bg-green-200"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          {index + 1}{" "}
+                          <span className="font-medium">{song.title}</span>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                          {song.author}
+                        </div>
                       </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Await>
-        </Suspense>
+                  ))}
+                </>
+              )}
+            </Await>
+          </Suspense>
+        </div>
       </div>
     </div>
   );

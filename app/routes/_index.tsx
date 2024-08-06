@@ -30,43 +30,48 @@ export default function Index() {
       <h1 className="mb-6 text-center text-6xl font-bold text-white">
         Welcome to MoodTunes
       </h1>
-      <div className="grid flex-grow grid-cols-1 gap-6 overflow-auto rounded-lg bg-gray-600 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <Suspense
-          fallback={
-            // Replace this with the proper skeltons later
-            <>
-              {[...Array(8)].map((_, index) => (
-                <div
-                  key={index}
-                  className="aspect-[1.1] w-full animate-pulse rounded-lg bg-[#191624] opacity-80"
-                ></div>
-              ))}
-            </>
-          }
-        >
-          <Await
-            resolve={categories}
-            errorElement={
-              <div className="text-red-500">
-                Something went wrong. Please try again later.
-              </div>
-            }
-          >
-            {(categories: CategoryProp[]) => (
+      {/* Solve grid row height issue - If you find any other method then to use the parent wrapper */}
+      <div className="flex-grow overflow-y-auto rounded-lg bg-gray-600 p-4">
+        <div className="grid h-fit grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <Suspense
+            fallback={
+              // Replace this with the proper skeltons later
               <>
-                {" "}
-                {categories.map((category) => (
-                  <CategoryCard
-                    key={category.id}
-                    category={category}
-                    setActiveCategory={setActiveCategory}
-                    active={activeCategory?.id === category.id}
-                  />
+                {[...Array(8)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="aspect-[1.1] w-full animate-pulse rounded-lg bg-[#191624] opacity-80"
+                  ></div>
                 ))}
               </>
-            )}
-          </Await>
-        </Suspense>
+            }
+          >
+            <Await
+              resolve={categories}
+              errorElement={
+                <div className="h-full content-center text-center text-red-500">
+                  <p className="text-3xl font-bold">
+                    Error Loading song categories. Please Reload...
+                  </p>
+                </div>
+              }
+            >
+              {(categories: CategoryProp[]) => (
+                <>
+                  {" "}
+                  {categories.map((category) => (
+                    <CategoryCard
+                      key={category.id}
+                      category={category}
+                      setActiveCategory={setActiveCategory}
+                      active={activeCategory?.id === category.id}
+                    />
+                  ))}
+                </>
+              )}
+            </Await>
+          </Suspense>
+        </div>
       </div>
     </div>
   );

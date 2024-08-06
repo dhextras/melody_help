@@ -6,7 +6,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
 
 import MusicPlayer from "~/components/MusicPlayer";
 import { generateMeta } from "~/utils/generateMeta";
@@ -20,7 +19,7 @@ import "~/styles/root.css";
 export const meta: MetaFunction = generateMeta("Home");
 
 export default function App() {
-  const [activeSongs, setActiveSongs] = useState<SongProp[] | []>([]);
+  const [activeSongsList, setActiveSongsList] = useState<SongProp[] | []>([]);
   const [activeCategory, setActiveCategory] = useState<CategoryProp | null>(
     null,
   );
@@ -37,14 +36,13 @@ export default function App() {
         <Header />
         <main className="flex-grow overflow-y-auto bg-green-600">
           <Outlet
-            context={{ setActiveSongs, setActiveCategory, activeCategory }}
+            context={{ setActiveSongsList, setActiveCategory, activeCategory }}
           />
         </main>
         <MusicPlayer
-          activeSongs={activeSongs}
+          activeSongsList={activeSongsList}
           activeCategory={activeCategory}
         />
-        <ToastContainer />
         <ScrollRestoration />
         <Scripts />
       </body>

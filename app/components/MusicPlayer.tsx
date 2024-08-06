@@ -11,14 +11,13 @@ import type { CategoryProp, SongProp } from "~/types/db.types";
 
 interface MusicPlayerProps {
   activeCategory: CategoryProp | null;
-  activeSongs: SongProp[];
+  activeSongsList: SongProp[];
 }
 
 // IMPORTANT TODO: 1. Clean the code since you fcking copy & pasted it, 2. Make it responsive for mobile, 3. Add Neumorphism effect
-function MusicPlayer({ activeCategory, activeSongs }: MusicPlayerProps) {
+function MusicPlayer({ activeCategory, activeSongsList }: MusicPlayerProps) {
   const {
     currentSongs,
-    currentIndex,
     isActive,
     isPlaying,
     activeSong,
@@ -37,7 +36,7 @@ function MusicPlayer({ activeCategory, activeSongs }: MusicPlayerProps) {
     setVolume,
     setRepeat,
     setShuffle,
-  } = usePlayer(activeSongs);
+  } = usePlayer(activeSongsList);
 
   const handlePlayPause = () => {
     if (!isActive) return;
