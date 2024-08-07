@@ -1,106 +1,51 @@
-import React from "react";
-
+import { useEffect } from "react";
 import Controls from "~/components/PlayerComponents/Controls";
 import Player from "~/components/PlayerComponents/Player";
 import Seekbar from "~/components/PlayerComponents/Seekbar";
 import Track from "~/components/PlayerComponents/Track";
 import VolumeBar from "~/components/PlayerComponents/VolumeBar";
-import { usePlayer } from "~/hooks/usePlayer";
 
-import type { CategoryProp, SongProp } from "~/types/db.types";
+import usePlayer from "~/hooks/usePlayer";
 
-interface MusicPlayerProps {
-  activeCategory: CategoryProp | null;
-  activeSongsList: SongProp[];
-}
+import type { PlaylistProp, SongProp } from "~/types/db.types";
+import type { usePlayerHookProps } from "~/types/player.types";
 
-// IMPORTANT TODO: 1. Clean the code since you fcking copy & pasted it, 2. Make it responsive for mobile, 3. Add Neumorphism effect
-function MusicPlayer({ activeCategory, activeSongsList }: MusicPlayerProps) {
-  const {
-    currentSongs,
-    isActive,
-    isPlaying,
-    activeSong,
-    duration,
-    seekTime,
-    appTime,
-    volume,
-    repeat,
-    shuffle,
-    playPause,
-    nextSong,
-    prevSong,
-    setDuration,
-    setSeekTime,
-    setAppTime,
-    setVolume,
-    setRepeat,
-    setShuffle,
-  } = usePlayer(activeSongsList);
-
-  const handlePlayPause = () => {
-    if (!isActive) return;
-    playPause(!isPlaying);
+export default function MusicPlayer({
+  playlistSongs,
+  activePlaylist,
+  songHooks,
+}: {
+  playlistSongs: SongProp[];
+  activePlaylist: PlaylistProp;
+  songHooks: {
+    isPlaying: boolean;
+    setIsPlaying: (isPlaying: boolean) => void;
+    activeSong: SongProp | null;
+    setActiveSong: (song: SongProp | null) => void;
   };
-
-  if (currentSongs.length === 0 || !activeSong || !activeCategory) return null;
+}) {
+  const usePlayerHook: usePlayerHookProps = usePlayer(
+    playlistSongs,
+    activePlaylist,
+    songHooks.isPlaying,
+    songHooks.setIsPlaying,
+    songHooks.activeSong,
+    songHooks.setActiveSong,
+  );
 
   return (
-    <div className="flex items-center justify-between bg-gray-800 p-2 px-8 text-white sm:px-12">
-      <Track
-        isPlaying={isPlaying}
-        isActive={isActive}
-        activeCategory={activeCategory}
-        activeSong={activeSong}
-      />
+    <div className="flex items-center justify-between bg-gray-800 p-2 text-white sm:px-12 lg:px-8">
+      <Track playerControl={usePlayerHook.playerControl} />
       <div className="flex flex-1 flex-col items-center justify-center">
-        <Controls
-          isPlaying={isPlaying}
-          repeat={repeat}
-          setRepeat={setRepeat}
-          shuffle={shuffle}
-          setShuffle={setShuffle}
-          currentSongs={currentSongs}
-          handlePlayPause={handlePlayPause}
-          handlePrevSong={prevSong}
-          handleNextSong={nextSong}
-        />
-        <Seekbar
-          value={appTime}
-          min={0}
-          max={duration}
-          onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setSeekTime(Number(event.target.value))
-          }
-          setSeekTime={setSeekTime}
-          appTime={appTime}
-        />
+        <Controls playerControl={usePlayerHook.playerControl} />
+        <Seekbar SeekControl={usePlayerHook.seekControl} />
         <Player
-          activeSong={activeSong}
-          isPlaying={isPlaying}
-          volume={volume}
-          seekTime={seekTime}
-          onEnded={nextSong}
-          onTimeUpdate={(event: React.SyntheticEvent<HTMLAudioElement>) =>
-            setAppTime(event.currentTarget.currentTime)
-          }
-          onLoadedData={(event: React.SyntheticEvent<HTMLAudioElement>) =>
-            setDuration(event.currentTarget.duration)
-          }
-          repeat={repeat}
+          playerControl={usePlayerHook.playerControl}
+          seekControl={usePlayerHook.seekControl}
+          volumeControl={usePlayerHook.volumeControl}
         />
       </div>
-      <VolumeBar
-        value={volume}
-        min={0}
-        max={1}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setVolume(Number(event.target.value))
-        }
-        setVolume={setVolume}
-      />
+      <VolumeBar volumeControl={usePlayerHook.volumeControl} />
     </div>
   );
 }
-
-export default MusicPlayer;

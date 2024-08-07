@@ -1,4 +1,4 @@
-export interface CategoryProp {
+export interface PlaylistProp {
   id: string;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ export interface CategoryProp {
 
 export interface SongProp {
   id: string;
-  categoryId: string;
+  playlistId: string;
   title: string;
   author: string;
   path: string;

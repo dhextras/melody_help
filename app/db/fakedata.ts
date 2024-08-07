@@ -1,9 +1,9 @@
-import type { CategoryProp, SongProp } from "~/types/db.types";
+import type { PlaylistProp, SongProp } from "~/types/db.types";
 
 const focusSongs: SongProp[] = Array.from({ length: 37 }, (_, i) => ({
   id: `focus${i + 1}`,
   title: `Focus Song ${i + 1}`,
-  categoryId: "focus",
+  playlistId: "focus",
   author: "dhextras",
   path: `/test_song.wav`, // Don't push this to github MF :(
 }));
@@ -11,7 +11,7 @@ const focusSongs: SongProp[] = Array.from({ length: 37 }, (_, i) => ({
 const relaxSongs: SongProp[] = Array.from({ length: 24 }, (_, i) => ({
   id: `relax${i + 1}`,
   title: `Relax Song ${i + 1}`,
-  categoryId: "relax",
+  playlistId: "relax",
   author: "dhextras",
   path: `/test_song_2.wav`, // Don't push this to github MF :(
 }));
@@ -19,12 +19,12 @@ const relaxSongs: SongProp[] = Array.from({ length: 24 }, (_, i) => ({
 const energizeSongs: SongProp[] = Array.from({ length: 20 }, (_, i) => ({
   id: `energize${i + 1}`,
   title: `Energize Song ${i + 1}`,
-  categoryId: "energize",
+  playlistId: "energize",
   author: "dhextras",
   path: `/test_song.wav`,
 }));
 
-export const fakeCategories: CategoryProp[] = [
+export const fakePlaylist: PlaylistProp[] = [
   {
     id: "focus",
     title: "Focus",

@@ -1,28 +1,28 @@
-import { fakeCategories, fakeSongs } from "~/db/fakedata";
+import { fakePlaylist, fakeSongs } from "~/db/fakedata";
 
-import type { CategoryProp, SongProp } from "~/types/db.types";
+import type { PlaylistProp, SongProp } from "~/types/db.types";
 
 /**
- * Retrieves the categories asynchronously.
+ * Retrieves the playlists asynchronously.
  *
- * @return {Promise<CategoryProp[]>} A promise that resolves to an array of songs Categories.
+ * @return {Promise<PlaylistProp[]>} A promise that resolves to an array of songs Playlists.
  */
-export const getCategories = async (): Promise<CategoryProp[]> => {
+export const getPlaylists = async (): Promise<PlaylistProp[]> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  return fakeCategories;
+  return fakePlaylist;
 };
 
 /**
- * Asynchronously retrieves the songs belonging to a specific category.
+ * Asynchronously retrieves the songs belonging to a specific playlist.
  *
- * @param {string} categoryId - The ID of the category to filter songs by.
+ * @param {string} playlistId - The ID of the playlist to filter songs by.
  * @return {Promise<SongProp[]>} A promise that resolves to an array of
- * SongProp objects belonging to the specified category.
+ * SongProp objects belonging to the specified playlist.
  */
-export const getcategorySongs = async (
-  categoryId: string,
+export const getplaylistSongs = async (
+  playlistId: string,
 ): Promise<SongProp[]> => {
   await new Promise((resolve) => setTimeout(resolve, 4000));
 
-  return fakeSongs.filter((song) => song.categoryId === categoryId);
+  return fakeSongs.filter((song) => song.playlistId === playlistId);
 };

@@ -1,38 +1,36 @@
-import type { CategoryProp, SongProp } from "~/types/db.types";
-
-interface TrackProps {
-  isPlaying: boolean;
-  isActive: boolean;
-  activeCategory: CategoryProp;
-  activeSong: SongProp;
-}
+import type { PlayerControlProp } from "~/types/player.types";
 
 export default function Track({
-  isPlaying,
-  isActive,
-  activeCategory,
-  activeSong,
-}: TrackProps) {
-  if (!activeSong) return null;
+  playerControl,
+}: {
+  playerControl: PlayerControlProp;
+}) {
+  if (!playerControl.activeSong) return null;
 
   return (
     <div className="flex flex-1 items-center justify-start py-2">
       <div
         className={`${
-          isPlaying && isActive ? "animate-[spin_3s_linear_infinite]" : ""
+          playerControl.isPlaying &&
+          playerControl.activeSong &&
+          playerControl.activePlaylist
+            ? "animate-[spin_3s_linear_infinite]"
+            : ""
         } hidden h-16 w-16 sm:block`}
       >
         <img
-          src={activeCategory.thumbnailImage}
+          src={playerControl.activePlaylist.thumbnailImage}
           alt="Image"
           className="h-full w-full rounded-full object-cover"
         />
       </div>
       <div className="ml-5 w-[50%]">
         <p className="truncate text-lg font-bold text-white">
-          {activeCategory.title}
+          {playerControl.activePlaylist.title}
         </p>
-        <p className="truncate text-gray-300">{activeSong.title}</p>
+        <p className="truncate text-gray-300">
+          {playerControl.activeSong.title}
+        </p>
       </div>
     </div>
   );

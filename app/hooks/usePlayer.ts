@@ -1,78 +1,79 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { SongProp } from "~/types/db.types";
+import type { PlaylistProp, SongProp } from "~/types/db.types";
+import type { usePlayerHookProps } from "~/types/player.types";
 
-export const usePlayer = (activeSongs: SongProp[]) => {
-  const [currentSongs, setCurrentSongs] = useState<SongProp[]>(activeSongs);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [activeSong, setActiveSong] = useState<SongProp | null>(null);
-  const [duration, setDuration] = useState(0);
-  const [seekTime, setSeekTime] = useState(0);
-  const [appTime, setAppTime] = useState(0);
-  const [volume, setVolume] = useState(0.3);
-  const [repeat, setRepeat] = useState(false);
-  const [shuffle, setShuffle] = useState(false);
+export const usePlayer = (
+  playlistSongs: SongProp[],
+  activePlaylist: PlaylistProp,
+  isPlaying: boolean,
+  setIsPlaying: (isPlaying: boolean) => void,
+  activeSong: SongProp | null,
+  setActiveSong: (song: SongProp | null) => void,
+): usePlayerHookProps => {
+  const activeSongIndex = useRef<number>(0);
+  const currentSongList = useRef<SongProp[]>(playlistSongs);
+
+  const [appTime, setAppTime] = useState<number>(0);
+  const [volume, setVolume] = useState<number>(0.3);
+  const [duration, setDuration] = useState<number>(0);
+  const [seekTime, setSeekTime] = useState<number>(0);
+  const [shuffle, setShuffle] = useState<boolean>(false);
 
   useEffect(() => {
-    setCurrentSongs(activeSongs);
-    setIsPlaying(false);
-  }, [activeSongs]);
-
-  useEffect(() => {
-    if (currentSongs.length) {
+    if (activeSong) {
+      const tempSongIndex = currentSongList.current.findIndex(
+        (song) => song.id === activeSong.id,
+      );
+      activeSongIndex.current = tempSongIndex !== -1 ? tempSongIndex : 0;
       setIsPlaying(true);
-      setActiveSong(currentSongs[currentIndex]);
-      setIsActive(true);
     }
-  }, [currentIndex, currentSongs]);
-
-  const playPause = (play: boolean) => {
-    setIsPlaying(play);
-  };
+  }, [activeSong]);
 
   const nextSong = () => {
-    playPause(false);
-    if (!shuffle) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % currentSongs.length);
-    } else {
-      setCurrentIndex(Math.floor(Math.random() * currentSongs.length));
-    }
+    setIsPlaying(false);
+    const nextSongIndex = shuffle
+      ? Math.floor(Math.random() * currentSongList.current.length)
+      : (activeSongIndex.current + 1) % currentSongList.current.length;
+
+    setActiveSong(currentSongList.current[nextSongIndex]);
   };
 
   const prevSong = () => {
-    if (currentIndex === 0) {
-      setCurrentIndex(currentSongs.length - 1);
-    } else if (shuffle) {
-      setCurrentIndex(Math.floor(Math.random() * currentSongs.length));
-    } else {
-      setCurrentIndex((prevIndex) => prevIndex - 1);
-    }
+    setIsPlaying(false);
+    const prevSongIndex = shuffle
+      ? Math.floor(Math.random() * currentSongList.current.length)
+      : activeSongIndex.current === 0
+        ? currentSongList.current.length - 1
+        : activeSongIndex.current - 1;
+
+    setActiveSong(currentSongList.current[prevSongIndex]);
   };
 
   return {
-    currentSongs,
-    setCurrentSongs,
-    currentIndex,
-    setCurrentIndex,
-    isActive,
-    isPlaying,
-    activeSong,
-    duration,
-    seekTime,
-    appTime,
-    volume,
-    repeat,
-    shuffle,
-    playPause,
-    nextSong,
-    prevSong,
-    setDuration,
-    setSeekTime,
-    setAppTime,
-    setVolume,
-    setRepeat,
-    setShuffle,
-  };
+    playerControl: {
+      activePlaylist,
+      activeSong,
+      isPlaying,
+      shuffle,
+      setShuffle,
+      setIsPlaying,
+      nextSong,
+      prevSong,
+    },
+    seekControl: {
+      seekTime,
+      appTime,
+      duration,
+      setSeekTime,
+      setAppTime,
+      setDuration,
+    },
+    volumeControl: {
+      volume,
+      setVolume,
+    },
+  } as usePlayerHookProps;
 };
+
+export default usePlayer;

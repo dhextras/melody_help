@@ -1,82 +1,46 @@
-import {
-  Pause,
-  Play,
-  Repeat,
-  Shuffle,
-  SkipBack,
-  SkipForward,
-} from "lucide-react";
-import React from "react";
+import { Pause, Play, Shuffle, SkipBack, SkipForward } from "lucide-react";
 
-import type { SongProp } from "~/types/db.types";
-
-interface ControlsProps {
-  isPlaying: boolean;
-  repeat: boolean;
-  setRepeat: React.Dispatch<React.SetStateAction<boolean>>;
-  shuffle: boolean;
-  setShuffle: React.Dispatch<React.SetStateAction<boolean>>;
-  currentSongs: SongProp[];
-  handlePlayPause: () => void;
-  handlePrevSong: () => void;
-  handleNextSong: () => void;
-}
+import type { PlayerControlProp } from "~/types/player.types";
 
 export default function Controls({
-  isPlaying,
-  repeat,
-  setRepeat,
-  shuffle,
-  setShuffle,
-  currentSongs,
-  handlePlayPause,
-  handlePrevSong,
-  handleNextSong,
-}: ControlsProps) {
+  playerControl,
+}: {
+  playerControl: PlayerControlProp;
+}) {
   return (
-    <div className="flex items-center justify-around md:w-36 lg:w-52 2xl:w-80">
-      <Repeat
-        size={20}
-        color={repeat ? "red" : "white"}
-        onClick={() => setRepeat((prev) => !prev)}
-        className="hidden cursor-pointer sm:block"
+    <div className="flex items-center justify-around gap-2 md:w-36 lg:w-52 2xl:w-80">
+      <SkipBack
+        size={30}
+        color="#FFF"
+        className="cursor-pointer"
+        onClick={playerControl.prevSong}
       />
-      {currentSongs.length && (
-        <SkipBack
-          size={30}
-          color="#FFF"
-          className="cursor-pointer"
-          onClick={handlePrevSong}
-        />
-      )}
-      {isPlaying ? (
+      {playerControl.isPlaying ? (
         <Pause
           size={45}
           color="#FFF"
-          onClick={handlePlayPause}
+          onClick={() => playerControl.setIsPlaying(false)}
           className="cursor-pointer"
         />
       ) : (
         <Play
           size={45}
           color="#FFF"
-          onClick={handlePlayPause}
+          onClick={() => playerControl.setIsPlaying(true)}
           className="cursor-pointer"
         />
       )}
-      {currentSongs?.length && (
-        <SkipForward
-          size={30}
-          color="#FFF"
-          className="cursor-pointer"
-          onClick={handleNextSong}
-        />
-      )}
+      <SkipForward
+        size={30}
+        color="#FFF"
+        className="cursor-pointer"
+        onClick={playerControl.nextSong}
+      />
       <Shuffle
         size={20}
-        color={shuffle ? "red" : "white"}
-        onClick={() => setShuffle((prev) => !prev)}
-        className="hidden cursor-pointer sm:block"
+        color={playerControl.shuffle ? "green" : "white"}
+        onClick={() => playerControl.setShuffle((prev) => !prev)}
+        className="cursor-pointer"
       />
     </div>
   );

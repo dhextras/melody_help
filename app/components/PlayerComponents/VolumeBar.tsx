@@ -1,39 +1,48 @@
-import { Volume1, Volume2, VolumeX } from "lucide-react";
 import React from "react";
+import { Volume1, Volume2, VolumeX } from "lucide-react";
 
-interface VolumeBarProps {
-  value: number;
-  min: number;
-  max: number;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  setVolume: (value: number) => void;
-}
+import type { VolumeControlProp } from "~/types/player.types";
 
 export default function VolumeBar({
-  value,
-  min,
-  max,
-  onChange,
-  setVolume,
-}: VolumeBarProps) {
+  volumeControl,
+}: {
+  volumeControl: VolumeControlProp;
+}) {
+  const volumeRef = React.useRef<HTMLInputElement>(null);
+
   return (
     <div className="hidden flex-1 items-center justify-end lg:flex">
-      {value <= 1 && value > 0.5 && (
-        <Volume2 size={25} color="#FFF" onClick={() => setVolume(0)} />
+      {volumeControl.volume <= 1 && volumeControl.volume > 0.5 && (
+        <Volume2
+          size={25}
+          color="#FFF"
+          onClick={() => volumeControl.setVolume(0)}
+        />
       )}
-      {value <= 0.5 && value > 0 && (
-        <Volume1 size={25} color="#FFF" onClick={() => setVolume(0)} />
+      {volumeControl.volume <= 0.5 && volumeControl.volume > 0 && (
+        <Volume1
+          size={25}
+          color="#FFF"
+          onClick={() => volumeControl.setVolume(0)}
+        />
       )}
-      {value === 0 && (
-        <VolumeX size={25} color="#FFF" onClick={() => setVolume(1)} />
+      {volumeControl.volume === 0 && (
+        <VolumeX
+          size={25}
+          color="#FFF"
+          onClick={() => volumeControl.setVolume(1)}
+        />
       )}
       <input
         type="range"
         step="any"
-        value={value}
-        min={min}
-        max={max}
-        onChange={onChange}
+        ref={volumeRef}
+        value={volumeControl.volume}
+        onChange={() =>
+          volumeControl.setVolume(volumeRef.current!.valueAsNumber)
+        }
+        min={0}
+        max={1}
         className="ml-2 h-1 md:w-32 lg:w-32 2xl:w-40"
       />
     </div>

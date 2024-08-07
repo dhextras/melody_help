@@ -2,16 +2,16 @@ import { useNavigate, useNavigation } from "@remix-run/react";
 
 import { Loader2, Pause, Play } from "lucide-react";
 
-import type { CategoryProp } from "~/types/db.types";
+import type { PlaylistProp } from "~/types/db.types";
 
-export default function CategoryCard({
-  category,
+export default function PlaylistCard({
+  playlist,
   active,
-  setActiveCategory,
+  setActivePlaylist,
 }: {
-  category: CategoryProp;
+  playlist: PlaylistProp;
   active: boolean;
-  setActiveCategory: (category: CategoryProp | null) => void;
+  setActivePlaylist: (playlist: PlaylistProp | null) => void;
 }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
@@ -22,10 +22,9 @@ export default function CategoryCard({
       className="group flex h-fit animate-slideup cursor-pointer flex-col rounded-lg bg-[#191624] bg-opacity-80 p-6"
       onClick={() => {
         if (!active) {
-          setActiveCategory(category);
-          navigate(`/categories/${category.id}`);
+          navigate(`/playlist/${playlist.id}`);
         } else {
-          setActiveCategory(null);
+          setActivePlaylist(null);
         }
       }}
     >
@@ -46,23 +45,23 @@ export default function CategoryCard({
           )}
         </div>
         <img
-          src={category.coverImage}
-          alt={category.title}
+          src={playlist.coverImage}
+          alt={playlist.title}
           className="w-full object-cover"
         />
       </div>
       <div className="mt-4 flex w-full gap-2">
-        <div className="overflow-hidden pr-2">
+        <div className="w-full overflow-hidden pr-2">
           <p className="truncate text-lg font-bold text-white">
-            {category.title}
+            {playlist.title}
           </p>
           <p className="truncate text-sm text-gray-100">
-            {category.description}
+            {playlist.description}
           </p>
         </div>
         <div className="flex items-end">
           <p className="whitespace-nowrap font-semibold text-green-300">
-            {category.totalSongs} Songs
+            {playlist.totalSongs} Songs
           </p>
         </div>
       </div>

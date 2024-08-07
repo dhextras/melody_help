@@ -6,22 +6,21 @@ import {
 } from "@remix-run/react";
 import { Suspense } from "react";
 
-import CategoryCard from "~/components/CategoryCard";
-import { getCategories } from "~/db/utils";
+import PlaylistCard from "~/components/PlaylistCard";
+import { getPlaylists } from "~/db/utils";
 
-import type { CategoryProp } from "~/types/db.types";
+import type { PlaylistProp } from "~/types/db.types";
 
 export const loader = () => {
-  const categories = getCategories();
-  return defer({ categories: categories });
+  const playlists = getPlaylists();
+  return defer({ playlists: playlists });
 };
 
 export default function Index() {
-  const { categories } = useLoaderData<{ categories: CategoryProp[] }>();
+  const { playlists } = useLoaderData<{ playlists: PlaylistProp[] }>();
 
-  const { setActiveCategory, activeCategory } = useOutletContext<{
-    setActiveCategory: (category: CategoryProp | null) => void;
-    activeCategory: CategoryProp | null;
+  const { setActivePlaylist } = useOutletContext<{
+    setActivePlaylist: (playlist: PlaylistProp | null) => void;
   }>();
 
   return (
@@ -47,24 +46,28 @@ export default function Index() {
             }
           >
             <Await
-              resolve={categories}
+              resolve={playlists}
               errorElement={
                 <div className="h-full content-center text-center text-red-500">
                   <p className="text-3xl font-bold">
-                    Error Loading song categories. Please Reload...
+                    Error Loading song playlist. Please Reload...
                   </p>
                 </div>
               }
             >
-              {(categories: CategoryProp[]) => (
+              {(playlist: PlaylistProp[]) => (
                 <>
                   {" "}
-                  {categories.map((category) => (
-                    <CategoryCard
-                      key={category.id}
-                      category={category}
-                      setActiveCategory={setActiveCategory}
-                      active={activeCategory?.id === category.id}
+                  {playlist.map((playlist) => (
+                    <PlaylistCard
+                      key={playlist.id}
+                      playlist={playlist}
+                      setActivePlaylist={setActivePlaylist}
+                      // active={
+                      //   usePlayerHook?.playerControl.activePlaylist?.id ===
+                      //   playlist.id
+                      // }
+                      active={false}
                     />
                   ))}
                 </>
