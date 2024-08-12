@@ -18,7 +18,6 @@ import "~/styles/root.css";
 
 export const meta: MetaFunction = generateMeta("Home");
 
-// do the same styling for the playlist page and the footer
 export default function App() {
   const [playlistSongs, setPlaylistSongs] = useState<SongProp[] | []>([]);
   const [activePlaylist, setActivePlaylist] = useState<PlaylistProp | null>(

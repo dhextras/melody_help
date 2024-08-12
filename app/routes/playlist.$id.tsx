@@ -59,8 +59,9 @@ export default function Playlist() {
       setPlaylistSongs(songs || []);
       if (songs?.length > 0) {
         songHooks.setActiveSong(songs[0] || null);
+      } else {
+        songHooks.setActiveSong(null);
       }
-      songHooks.setActiveSong(null);
     })();
   }, [SongsPromise]);
 
@@ -149,6 +150,7 @@ export default function Playlist() {
                   {playlistSongs && playlistSongs.length > 0 ? (
                     playlistSongs.map((song, index) => (
                       <SongCard
+                        key={song.id}
                         song={song}
                         songHooks={songHooks}
                         index={index}

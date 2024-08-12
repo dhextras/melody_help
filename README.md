@@ -67,6 +67,9 @@ Music Streaming Web App
       time INTEGER DEFAULT 0
    );
 
+   -- NOTE: Make sure to make the buckets public
+   -- Restrict Mime type for both of the buckets to audio and image
+
    -- Create 'songs' bucket
    INSERT INTO storage.buckets (id, name)
    VALUES ('songs', 'songs')
@@ -78,6 +81,10 @@ Music Streaming Web App
    ON CONFLICT (id) DO NOTHING;
 
    -- Create Policies for Tables & Buckets
+
+   -- Allow read access for All buckets
+   CREATE POLICY "Enable read access for all users"
+   ON "storage"."buckets" FOR SELECT USING (true);
 
    -- Allow read access to 'playlists' table
    CREATE POLICY "Allow read access to playlists table"

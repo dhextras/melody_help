@@ -18,7 +18,6 @@ export default function SongCard({
 }) {
   return (
     <div
-      key={song.id}
       onClick={() => {
         songHooks.setActiveSong(song);
         songHooks.setIsPlaying(!songHooks.isPlaying);

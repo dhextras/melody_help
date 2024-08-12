@@ -28,7 +28,7 @@ export const getplaylistSongs = async (
   const { data, error } = await supabase
     .from("songs")
     .select("*")
-    .eq("playlist_id", "fdsajl");
+    .eq("playlist_id", playlistId);
   if (error || !data) {
     return null;
   }

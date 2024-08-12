@@ -32,6 +32,8 @@ export default function MusicPlayer({
     songHooks.setActiveSong,
   );
 
+  if (!songHooks.activeSong) return null;
+
   return (
     <div className="flex items-center justify-between bg-secondary text-textPrimary sm:px-12 lg:px-8">
       <Track playerControl={usePlayerHook.playerControl} />
