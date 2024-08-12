@@ -23,14 +23,13 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.id, "id must be provided");
 
   const playlists = await getPlaylists();
-  const playlist = playlists.find((c) => c.id === params.id);
+  const playlist = playlists?.find((c) => c.id === params.id);
 
   if (!playlist) {
     throw redirect("/");
   }
 
   const SongsPromise = getplaylistSongs(playlist.id);
-
   return defer({ playlist, SongsPromise });
 };
 
@@ -57,8 +56,11 @@ export default function Playlist() {
       setPlaylistSongs([]);
       songHooks.setActiveSong(null);
       const songs = await SongsPromise;
-      setPlaylistSongs(songs);
-      songHooks.setActiveSong(songs[0] || null);
+      setPlaylistSongs(songs || []);
+      if (songs?.length > 0) {
+        songHooks.setActiveSong(songs[0] || null);
+      }
+      songHooks.setActiveSong(null);
     })();
   }, [SongsPromise]);
 
@@ -66,7 +68,7 @@ export default function Playlist() {
     <div className="flex h-full w-full flex-col">
       <div className="relative h-48 font-bold text-textPrimary">
         <img
-          src={playlist.coverImage}
+          src={playlist.cover_image}
           alt={playlist.title}
           className="h-full w-full object-cover"
         />
@@ -92,7 +94,7 @@ export default function Playlist() {
 
           <div className="flex items-end">
             <p className="whitespace-nowrap text-2xl opacity-70">
-              {playlist.totalSongs} Songs
+              {playlist.total_songs} Songs
             </p>
           </div>
         </div>
@@ -136,16 +138,30 @@ export default function Playlist() {
               errorElement={
                 <div className="h-full content-center text-center text-red-500">
                   <p className="text-3xl font-bold">
-                    Error Loading Songs for {playlist.title}. Please Reload...
+                    Error Loading Songs for playlist '{playlist.title}'. Please
+                    Reload...
                   </p>
                 </div>
               }
             >
-              {(playlistSongs: SongProp[]) => (
+              {(playlistSongs: SongProp[] | null) => (
                 <>
-                  {playlistSongs.map((song, index) => (
-                    <SongCard song={song} songHooks={songHooks} index={index} />
-                  ))}
+                  {playlistSongs && playlistSongs.length > 0 ? (
+                    playlistSongs.map((song, index) => (
+                      <SongCard
+                        song={song}
+                        songHooks={songHooks}
+                        index={index}
+                      />
+                    ))
+                  ) : (
+                    <div className="h-full content-center text-center text-action">
+                      <p className="text-3xl font-bold">
+                        There is 0 Songs available for playlist '
+                        {playlist.title}'. Please Upload some to listen..
+                      </p>
+                    </div>
+                  )}
                 </>
               )}
             </Await>

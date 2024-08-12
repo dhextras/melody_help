@@ -19,7 +19,7 @@ export default function Track({
         } hidden h-16 w-16 sm:block`}
       >
         <img
-          src={playerControl.activePlaylist.thumbnailImage}
+          src={playerControl.activePlaylist.thumbnail_image}
           alt="Image"
           className="h-full w-full rounded-full object-cover"
         />
@@ -27,11 +27,9 @@ export default function Track({
       <div className="mb-2 ml-4 max-w-[30vw] sm:max-w-[35vw]">
         <p className="truncate text-xl font-bold">
           {playerControl.activePlaylist.title}{" "}
-          fkldsjl;fsjda;lfjl;asjkfdsafdsjakfldsajl;fjsda;lfjsd;afjskdla;jfkds
         </p>
         <p className="ml-[0.02rem] mt-[-0.2rem] truncate text-[0.8rem] font-semibold opacity-70">
-          {playerControl.activeSong.title} f;dslj l;fdjsa ;ljfsadl; jdsl;k
-          jdfsa;kj l;fdskaj l;fsdj l;fsdjl;
+          {playerControl.activeSong.title}
         </p>
       </div>
     </div>

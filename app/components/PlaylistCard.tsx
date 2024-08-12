@@ -53,7 +53,7 @@ export default function PlaylistCard({
           )}
         </div>
         <img
-          src={playlist.coverImage}
+          src={playlist.cover_image}
           alt={playlist.title}
           className="w-full object-cover"
         />
@@ -69,7 +69,7 @@ export default function PlaylistCard({
         </div>
         <div className="flex items-end">
           <p className="whitespace-nowrap text-sm font-semibold text-textPrimary opacity-75">
-            {playlist.totalSongs} Songs
+            {playlist.total_songs} Songs
           </p>
         </div>
       </div>

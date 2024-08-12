@@ -43,7 +43,96 @@ Music Streaming Web App
 
 4. Create the necessary database tables by running the following SQL queries in the Supabase SQL Editor:
 
-   > Need to be done...
+   ```sql
+   -- Create Tables & Buckets
+
+   -- Create 'playlists' table
+   CREATE TABLE playlists (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY key,
+      title TEXT NOT NULL,
+      description TEXT,
+      total_songs integer DEFAULT 0,
+      cover_image TEXT NOT NULL, -- Path to cover image
+      thumbnail_image TEXT NOT NULL -- Path to thumbnail image
+   );
+
+   -- Create 'songs' table
+   CREATE TABLE songs (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY key,
+      title TEXT NOT NULL,
+      playlist_id UUID NOT NULL REFERENCES playlists(id),
+      path TEXT NOT NULL, -- Path to song file
+      producer TEXT,
+      date_uploaded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      time INTEGER DEFAULT 0
+   );
+
+   -- Create 'songs' bucket
+   INSERT INTO storage.buckets (id, name)
+   VALUES ('songs', 'songs')
+   ON CONFLICT (id) DO NOTHING;
+
+   -- Create 'images' bucket
+   INSERT INTO storage.buckets (id, name)
+   VALUES ('images', 'images')
+   ON CONFLICT (id) DO NOTHING;
+
+   -- Create Policies for Tables & Buckets
+
+   -- Allow read access to 'playlists' table
+   CREATE POLICY "Allow read access to playlists table"
+   ON playlists FOR SELECT USING (true);
+
+   -- Allow read access to 'songs' table
+   CREATE POLICY "Allow read access to songs table"
+   ON songs FOR SELECT USING (true);
+
+   -- Allow read access to 'songs' bucket
+   CREATE POLICY "Allow read access to songs bucket"
+   ON storage.objects FOR SELECT USING (bucket_id = 'songs');
+
+   -- Allow read access to 'images' bucket
+   CREATE POLICY "Allow read access to images bucket"
+   ON storage.objects FOR SELECT USING (bucket_id = 'images');
+
+   -- Allow write access to 'songs' bucket
+   CREATE POLICY "Allow write access to songs bucket"
+   ON storage.objects FOR INSERT TO authenticated
+   WITH CHECK (bucket_id = 'songs');
+
+   -- Allow write access to 'images' bucket
+   CREATE POLICY "Allow write access to images bucket"
+   ON storage.objects FOR INSERT TO authenticated
+   WITH CHECK (bucket_id = 'images');
+
+   -- Create a function to update total_songs in playlists table
+   CREATE OR REPLACE FUNCTION update_total_songs()
+   RETURNS TRIGGER AS $$
+   BEGIN
+   IF TG_OP = 'INSERT' THEN
+      UPDATE playlists
+      SET total_songs = total_songs + 1
+      WHERE id = NEW.playlist_id;
+   ELSIF TG_OP = 'DELETE' THEN
+      UPDATE playlists
+      SET total_songs = total_songs - 1
+      WHERE id = OLD.playlist_id;
+   END IF;
+   RETURN NULL;
+   END
+   $$ LANGUAGE plpgsql;
+
+   -- Create a trigger to automatically update total_songs
+   CREATE TRIGGER update_total_songs_trigger
+   AFTER INSERT OR DELETE ON songs
+   FOR EACH ROW
+   EXECUTE PROCEDURE update_total_songs();
+
+   -- Enable RLS on tables
+   ALTER TABLE playlists ENABLE ROW LEVEL SECURITY;
+   ALTER TABLE songs ENABLE ROW LEVEL SECURITY;
+
+   ```
 
 5. Start the development server:
 
@@ -96,7 +185,58 @@ To deploy Mode Tunes to a VPS and manage it using PM2 for process management and
 
 ## Database structure
 
-    > Need to be done...
+### Playlists Table
+
+This table stores information about playlists. It includes:
+
+- `id`: A unique identifier for each playlist.
+- `title`: The title of the playlist.
+- `description`: An optional description of the playlist.
+- `total_songs`: The total number of songs in the playlist (automatically updated).
+- `cover_image`: The path to the cover image of the playlist.
+- `thumbnail_image`: The path to the thumbnail image of the playlist.
+
+### Songs Table
+
+This table stores information about songs. It includes:
+
+- `id`: A unique identifier for each song.
+- `title`: The title of the song.
+- `playlist_id`: The ID of the playlist to which the song belongs.
+- `path`: The path to the song file.
+- `producer`: The producer of the song.
+- `date_uploaded`: The timestamp when the song was uploaded.
+- `time`: The duration of the song in seconds.
+
+### Songs Bucket
+
+This bucket stores song files. It is used for:
+
+- Uploading and storing song files.
+- Managing access to song files.
+
+### Images Bucket
+
+This bucket stores cover and thumbnail images. It is used for:
+
+- Uploading and storing cover and thumbnail images.
+- Managing access to image files.
+
+### Policies
+
+#### Table Policies
+
+- **Playlists Table**: Allows read access to the `playlists` table for all users.
+- **Songs Table**: Allows read access to the `songs` table for all users.
+
+#### Bucket Policies
+
+- **Songs Bucket**: Allows read and write access to the `songs` bucket for authenticated users.
+- **Images Bucket**: Allows read and write access to the `images` bucket for authenticated users.
+
+#### Triggers
+
+- **Update Total Songs**: A trigger that updates the `total_songs` count in the `playlists` table whenever a song is added or removed.
 
 ### Supabase Details
 

@@ -1,4 +1,4 @@
-import { fakePlaylist, fakeSongs } from "~/db/fakedata";
+import { supabase } from "./auth";
 
 import type { PlaylistProp, SongProp } from "~/types/db.types";
 
@@ -7,9 +7,12 @@ import type { PlaylistProp, SongProp } from "~/types/db.types";
  *
  * @return {Promise<PlaylistProp[]>} A promise that resolves to an array of songs Playlists.
  */
-export const getPlaylists = async (): Promise<PlaylistProp[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return fakePlaylist;
+export const getPlaylists = async (): Promise<PlaylistProp[] | null> => {
+  const { data, error } = await supabase.from("playlists").select("*");
+  if (error || !data) {
+    return null;
+  }
+  return data as PlaylistProp[];
 };
 
 /**
@@ -21,8 +24,13 @@ export const getPlaylists = async (): Promise<PlaylistProp[]> => {
  */
 export const getplaylistSongs = async (
   playlistId: string,
-): Promise<SongProp[]> => {
-  await new Promise((resolve) => setTimeout(resolve, 4000));
-
-  return fakeSongs.filter((song) => song.playlistId === playlistId);
+): Promise<SongProp[] | null> => {
+  const { data, error } = await supabase
+    .from("songs")
+    .select("*")
+    .eq("playlist_id", "fdsajl");
+  if (error || !data) {
+    return null;
+  }
+  return data as SongProp[];
 };

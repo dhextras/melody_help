@@ -49,8 +49,15 @@ export default function SongCard({
         <div className="hidden w-36 sm:flex md:w-64">
           <span className="truncate">{song.producer} </span>
         </div>
-        <span className="mx-auto hidden w-32 lg:flex">2023/12/12 21:21</span>
-        <span className="ml-auto w-10">12.25</span>
+        <span className="mx-auto hidden w-32 lg:flex">
+          {new Date(song.date_uploaded).toLocaleTimeString()}
+        </span>
+        <span className="ml-auto w-10">
+          {song.time === 0 || isNaN(song.time)
+            ? "--:--"
+            : new Date(song.time * 1000).toISOString().substring(14, 19)}
+        </span>
+        <span className="ml-auto w-10">{song.time}</span>
       </div>
     </div>
   );

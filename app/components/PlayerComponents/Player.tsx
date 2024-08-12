@@ -50,7 +50,7 @@ export default function Player({
       album: playerControl.activeSong?.producer || "Unkown",
       artwork: [
         {
-          src: playerControl.activePlaylist.thumbnailImage,
+          src: playerControl.activePlaylist.thumbnail_image,
           sizes: "128x128",
           type: "image/png",
         },

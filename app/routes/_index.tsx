@@ -11,13 +11,18 @@ import { getPlaylists } from "~/db/utils";
 
 import type { PlaylistProp } from "~/types/db.types";
 
-export const loader = () => {
+export const loader = async () => {
   const playlists = getPlaylists();
-  return defer({ playlists: playlists });
+
+  return defer({
+    playlists: playlists,
+  });
 };
 
 export default function Index() {
-  const { playlists } = useLoaderData<{ playlists: PlaylistProp[] }>();
+  const { playlists } = useLoaderData<{
+    playlists: PlaylistProp[];
+  }>();
 
   const { setActivePlaylist, activePlaylist } = useOutletContext<{
     setActivePlaylist: (playlist: PlaylistProp | null) => void;
