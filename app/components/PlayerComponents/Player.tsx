@@ -46,8 +46,8 @@ export default function Player({
   useEffect(() => {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: playerControl.activePlaylist.title,
-      artist: playerControl.activeSong?.title || "Unkown", // the artist and album props are using title and author bcz we are dealing with playlist based songs.
-      album: playerControl.activeSong?.author || "Unkown",
+      artist: playerControl.activeSong?.title || "Unkown", // the artist and album props are using title and producer bcz we are dealing with playlist based songs.
+      album: playerControl.activeSong?.producer || "Unkown",
       artwork: [
         {
           src: playerControl.activePlaylist.thumbnailImage,

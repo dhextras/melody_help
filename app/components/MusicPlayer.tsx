@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Controls from "~/components/PlayerComponents/Controls";
 import Player from "~/components/PlayerComponents/Player";
 import Seekbar from "~/components/PlayerComponents/Seekbar";
@@ -34,9 +33,9 @@ export default function MusicPlayer({
   );
 
   return (
-    <div className="flex items-center justify-between bg-gray-800 p-2 text-white sm:px-12 lg:px-8">
+    <div className="flex items-center justify-between bg-secondary text-textPrimary sm:px-12 lg:px-8">
       <Track playerControl={usePlayerHook.playerControl} />
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="flex flex-1 flex-col items-center justify-center gap-0 py-4 md:gap-1">
         <Controls playerControl={usePlayerHook.playerControl} />
         <Seekbar SeekControl={usePlayerHook.seekControl} />
         <Player

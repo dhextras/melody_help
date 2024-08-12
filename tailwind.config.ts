@@ -4,6 +4,16 @@ export default {
   content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors: {
+        textPrimary: "rgb(var(--text-primary-color))",
+        primary: "rgb(var(--primary-color))",
+        secondary: "rgb(var(--secondary-color))",
+        action: "rgb(var(--action-color))",
+      },
+      boxShadow: {
+        neumorphism: "var(--neumorphism-box-shadow)",
+        neumorphismInset: "var(--neumorphism-inset-box-shadow)",
+      },
       animation: {
         slideup: "slideup 1s ease-in-out",
         slidedown: "slidedown 1s ease-in-out",

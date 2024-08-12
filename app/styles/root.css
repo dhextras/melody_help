@@ -2,20 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+.light-mode {
+  --text-primary-color: 0, 0, 0;
+  --primary-color: 247, 247, 247;
+  --secondary-color: 167, 167, 167;
+  --action-color: 27, 215, 96;
+  --neumorphism-box-shadow: rgb(85, 85, 85) 3px 3px 15px,
+    rgb(246 246 246) -2px -2px 28px;
+  --neumorphism-inset-box-shadow: inset rgb(85, 85, 85) 3px 3px 15px,
+    inset rgb(246 246 246) -2px -2px 28px;
+}
+
+.dark-mode {
+  --text-primary-color: 255, 255, 255;
+  --primary-color: 43, 54, 61;
+  --secondary-color: 19, 19, 19;
+  --action-color: 27, 215, 96;
+  --neumorphism-box-shadow: 3px 3px 9px -1px rgb(8, 8, 8),
+    -5px -4px 10px 1px rgb(30, 30, 30);
+  --neumorphism-inset-box-shadow: inset 3px 3px 9px -1px rgb(8, 8, 8),
+    inset -5px -4px 10px 1px rgb(30, 30, 30);
+}
+
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: rgb(var(--primary-color));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2c2c2c;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #202124;
+/* I have No fcking idea how to handle this other wise */
+.dark-mode ::-webkit-scrollbar-thumb {
+  background-color: rgb(167, 167, 167);
+}
+
+.light-mode ::-webkit-scrollbar-thumb {
+  background-color: rgb(19, 19, 19);
 }

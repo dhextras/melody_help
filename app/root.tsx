@@ -18,6 +18,7 @@ import "~/styles/root.css";
 
 export const meta: MetaFunction = generateMeta("Home");
 
+// do the same styling for the playlist page and the footer
 export default function App() {
   const [playlistSongs, setPlaylistSongs] = useState<SongProp[] | []>([]);
   const [activePlaylist, setActivePlaylist] = useState<PlaylistProp | null>(
@@ -35,13 +36,14 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="absolute inset-0 flex flex-col">
+      <body className="dark-mode absolute inset-0 flex flex-col">
         <Header />
 
-        <main className="flex-grow overflow-y-auto bg-green-600">
+        <main className="flex-grow overflow-y-auto bg-primary">
           <Outlet
             context={{
               setActivePlaylist,
+              activePlaylist,
               setPlaylistSongs,
               setActiveSong,
               songHooks,

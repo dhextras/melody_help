@@ -11,6 +11,6 @@ export interface SongProp {
   id: string;
   playlistId: string;
   title: string;
-  author: string;
+  producer: string;
   path: string;
 }

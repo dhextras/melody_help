@@ -8,7 +8,7 @@ export default function Track({
   if (!playerControl.activeSong) return null;
 
   return (
-    <div className="flex flex-1 items-center justify-start py-2">
+    <div className="flex flex-1 items-center justify-start text-textPrimary">
       <div
         className={`${
           playerControl.isPlaying &&
@@ -24,12 +24,14 @@ export default function Track({
           className="h-full w-full rounded-full object-cover"
         />
       </div>
-      <div className="ml-5 w-[50%]">
-        <p className="truncate text-lg font-bold text-white">
-          {playerControl.activePlaylist.title}
+      <div className="mb-2 ml-4 max-w-[30vw] sm:max-w-[35vw]">
+        <p className="truncate text-xl font-bold">
+          {playerControl.activePlaylist.title}{" "}
+          fkldsjl;fsjda;lfjl;asjkfdsafdsjakfldsajl;fjsda;lfjsd;afjskdla;jfkds
         </p>
-        <p className="truncate text-gray-300">
-          {playerControl.activeSong.title}
+        <p className="ml-[0.02rem] mt-[-0.2rem] truncate text-[0.8rem] font-semibold opacity-70">
+          {playerControl.activeSong.title} f;dslj l;fdjsa ;ljfsadl; jdsl;k
+          jdfsa;kj l;fdskaj l;fsdj l;fsdjl;
         </p>
       </div>
     </div>

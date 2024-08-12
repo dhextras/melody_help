@@ -12,10 +12,8 @@ export default function Seekbar({
   const timeRef = React.useRef<HTMLInputElement>(null);
 
   return (
-    <div className="mt-1 flex flex-row items-center">
-      <p className="hidden text-white sm:flex">
-        {SeekControl.appTime === 0 ? "0:00" : getTime(SeekControl.appTime)}
-      </p>
+    <div className="mt-1 hidden flex-row items-center text-textPrimary sm:flex">
+      <p>{SeekControl.appTime === 0 ? "0:00" : getTime(SeekControl.appTime)}</p>
       <input
         type="range"
         step="any"
@@ -28,7 +26,7 @@ export default function Seekbar({
         max={SeekControl.duration}
         className="mx-4 h-1 w-36 rounded-lg md:w-56 2xl:mx-6 2xl:w-96"
       />
-      <p className="hidden text-white sm:flex">
+      <p>
         {SeekControl.duration === 0 ? "0:00" : getTime(SeekControl.duration)}
       </p>
     </div>
