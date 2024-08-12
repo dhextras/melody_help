@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev",
+    "dev": "node ./server.js",
+    "start": "cross-env NODE_ENV=production node ./server.js",
     "format": "prettier --write . && prettier --write --plugin=prettier-plugin-organize-imports .",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -17,12 +17,12 @@
     "@remix-run/react": "^2.10.3",
     "@remix-run/serve": "^2.10.3",
     "@supabase/supabase-js": "^2.45.1",
+    "cross-env": "^7.0.3",
+    "express": "^4.19.2",
     "isbot": "^4.1.0",
     "lucide-react": "^0.424.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-loading-skeleton": "^3.4.0",
-    "react-toastify": "^10.0.5",
     "tiny-invariant": "^1.3.3"
   },
   "devDependencies": {
