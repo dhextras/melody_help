@@ -56,7 +56,6 @@ export default function SongCard({
             ? "--:--"
             : new Date(song.time * 1000).toISOString().substring(14, 19)}
         </span>
-        <span className="ml-auto w-10">{song.time}</span>
       </div>
     </div>
   );
