@@ -110,7 +110,7 @@ export default function Playlist() {
               Song Name
             </span>
           </div>
-          <div className="flex w-full gap-10 font-semibold">
+          <div className="flex w-full gap-4 font-semibold">
             <div className="hidden w-36 sm:flex md:w-64">
               <span className="truncate">Producer</span>
             </div>
