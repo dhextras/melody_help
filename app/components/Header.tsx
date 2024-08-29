@@ -33,10 +33,9 @@ export default function Header() {
 
   return (
     <header className="bg-secondary text-textPrimary">
-      <div className="mx-auto flex items-center justify-between px-4 py-5">
+      <div className="mx-auto flex items-center justify-between px-4 py-1">
         <Link to="/" className="flex items-center space-x-3">
-          <img src="/image.webp" alt="MoodTunes Logo" className="h-10 w-10" />
-          <span className="text-2xl font-bold">MoodTunes</span>
+          <img src="/logo.png" alt="MelodyHelp Logo" className="h-32 w-32" />
         </Link>
         <nav>
           <DarkModeSwitcher isDarkMode={isDarkMode} toggleTheme={toggleTheme} />

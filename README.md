@@ -1,4 +1,4 @@
-# MoodTunes
+# MelodyHelp
 
 Music Streaming Web App
 
@@ -7,13 +7,13 @@ Music Streaming Web App
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/dhextras/mode_tunes.git
+   git clone https://github.com/dhextras/melody_help.git
    ```
 
 2. Install dependencies:
 
    ```bash
-   cd mode_tunes
+   cd melody_help
    npm install
    ```
 
@@ -63,7 +63,6 @@ Music Streaming Web App
       playlist_id UUID NOT NULL REFERENCES playlists(id),
       path TEXT NOT NULL, -- Path to song file
       producer TEXT,
-      date_uploaded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       time INTEGER DEFAULT 0
    );
 
@@ -151,7 +150,7 @@ Music Streaming Web App
 
 ## Deployment to VPS
 
-To deploy Mode Tunes to a VPS and manage it using PM2 for process management and Caddy for SSL and reverse proxy:
+To deploy Melody Help to a VPS and manage it using PM2 for process management and Caddy for SSL and reverse proxy:
 
 1. Install PM2 globally (if not already installed):
 
@@ -162,7 +161,7 @@ To deploy Mode Tunes to a VPS and manage it using PM2 for process management and
 2. Build and start the server with PM2:
 
    ```bash
-   pm2 start npm --name "mode_tunes" -- start --watch
+   pm2 start npm --name "melody_help" -- start --watch
    ```
 
    This command will start the application using PM2, which will manage the Node.js process, restart it on failures, and allow easy monitoring.
@@ -188,7 +187,7 @@ To deploy Mode Tunes to a VPS and manage it using PM2 for process management and
 
 5. Access your application:
 
-   Once DNS propagation is complete, you can access Mode Tunes app at your configured domain over HTTPS.
+   Once DNS propagation is complete, you can access Melody Help app at your configured domain over HTTPS.
 
 ## Database structure
 
@@ -212,7 +211,6 @@ This table stores information about songs. It includes:
 - `playlist_id`: The ID of the playlist to which the song belongs.
 - `path`: The path to the song file.
 - `producer`: The producer of the song.
-- `date_uploaded`: The timestamp when the song was uploaded.
 - `time`: The duration of the song in seconds.
 
 ### Songs Bucket

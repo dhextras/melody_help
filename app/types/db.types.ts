@@ -13,6 +13,5 @@ export interface SongProp {
   playlist_id: string;
   path: string;
   producer: string;
-  date_uploaded: string;
   time: number;
 }

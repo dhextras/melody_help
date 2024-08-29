@@ -33,7 +33,7 @@ export default function Index() {
     <div className="flex h-full flex-col px-4 py-8">
       <h1 className="mb-6 text-center text-6xl font-bold">
         <span className="bg-gradient-to-r from-textPrimary from-[-50%] via-action via-50% to-textPrimary to-[150%] bg-clip-text text-transparent">
-          MoodTunes
+          Melody Help
         </span>
       </h1>
       {/* Solve grid row height issue - If you find any other method then to use the parent wrapper */}

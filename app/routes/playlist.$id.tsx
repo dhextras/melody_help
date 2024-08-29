@@ -101,7 +101,7 @@ export default function Playlist() {
         </div>
       </div>
       <div className="flex flex-grow flex-col overflow-y-auto px-4 py-2">
-        <div className="flex items-center justify-between gap-10 rounded-lg px-4 text-sm font-bold text-textPrimary opacity-70 sm:gap-32">
+        <div className="flex items-center justify-between gap-10 rounded-lg pl-4 pr-6 text-sm font-bold text-textPrimary opacity-70 sm:gap-32">
           <div className="flex items-center space-x-1 sm:space-x-4">
             <div className="flex w-6 justify-center text-lg">
               <span>#</span>{" "}
@@ -110,14 +110,11 @@ export default function Playlist() {
               Song Name
             </span>
           </div>
-          <div className="flex w-full gap-4 font-semibold">
-            <div className="hidden w-36 sm:flex md:w-64">
-              <span className="truncate">Producer</span>
-            </div>
-            <span className="mx-auto hidden w-32 lg:flex">Date Added</span>
-            <div className="ml-auto flex w-10 justify-start">
-              <Timer size={20} className="font-semibold text-textPrimary" />
-            </div>
+          <div className="hidden w-36 sm:flex md:w-64">
+            <span className="truncate">Producer</span>
+          </div>
+          <div className="flex w-10 justify-start pl-[0.3rem]">
+            <Timer size={20} className="font-semibold text-textPrimary" />
           </div>
         </div>
         <div className="mx-4 mb-4 mt-1 border-b-2 border-textPrimary"></div>

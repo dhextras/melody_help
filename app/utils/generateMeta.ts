@@ -5,7 +5,7 @@
  */
 export function generateMeta(title: string) {
   return () => [
-    { title: `${title} | Mode Tunes` },
+    { title: `${title} | Melody Help` },
     {
       name: "description",
       content: "Simple Music Streaming Web App",

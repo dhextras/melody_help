@@ -53,7 +53,7 @@ export default function PlaylistCard({
           )}
         </div>
         <img
-          src={playlist.cover_image}
+          src={playlist.thumbnail_image}
           alt={playlist.title}
           className="w-full object-cover"
         />
